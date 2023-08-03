@@ -1,7 +1,7 @@
 version: "3.9"
 services:
-  python-boilerplate:
-    image: python-boilerplate
+  capitals:
+    image: capitals
     build: .
     volumes:
       - .:/code
