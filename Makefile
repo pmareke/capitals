@@ -9,6 +9,14 @@ help:  ## Show this help.
 local-setup: ## Sets up the local environment (e.g. install git hooks)
 	scripts/local-setup.sh
 
+.PHONY: up
+up:    ## Run the app
+	docker-compose up --build capitals
+
+.PHONY: down
+down: ## Stop and remove all the Docker services, volumes and networks
+	docker-compose down -v --remove-orphans
+
 .PHONY: build
 build: ## Builds the app
 	docker build --no-cache -t capitals .

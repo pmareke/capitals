@@ -12,6 +12,9 @@ mypy = "^1.4.1"
 yapf = "^0.40.1"
 ruff = "^0.0.280"
 requests = "^2.31.0"
+fastapi = "^0.100.1"
+uvicorn = "^0.23.2"
+httpx = "^0.24.1"
 
 
 [tool.poetry.group.dev.dependencies]

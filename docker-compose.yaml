@@ -7,3 +7,5 @@ services:
       - .:/code
     environment:
       PYTHONPATH: .
+    ports:
+      - "8080:8080"

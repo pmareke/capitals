@@ -1,6 +1,6 @@
-from src.dummy_class import Dummy
+from fastapi import FastAPI
+from src.delivery.api.v1.status_router import status_router
 
-dummy_class = Dummy()
-result = dummy_class.add(1, 2)
+app = FastAPI()
 
-print(result)
+app.include_router(status_router)
