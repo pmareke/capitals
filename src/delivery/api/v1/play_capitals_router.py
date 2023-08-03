@@ -20,8 +20,6 @@ def play_capitals(handler: PlayCapitalsCommandHandler = Depends(
     _play_capitals_command_handler)) -> CountriesResponse:
     command = PlayCapitalsCommand()
     response = handler.process(command)
-    countries_response = [
-        CountryResponse(country.name, country.flag)
-        for country in response.countries
-    ]
-    return CountriesResponse(countries_response)
+    country_response = CountryResponse(response.country.name, response.country.flag)
+    capitals = response.capitals
+    return CountriesResponse(country_response, capitals)

@@ -12,8 +12,8 @@ class TestCapitalsControllerAcceptance:
         response = client.get("/api/v1/play")
 
         expect(response.status_code).to(equal(HTTPStatus.OK))
-        expect(response.json()).to(have_key("countries"))
-        expect(response.json()["countries"]).to(have_len(3))
+        expect(response.json()).to(have_key("country"))
+        expect(response.json()["capitals"]).to(have_len(3))
 
     def test_wins_capitals_game(self) -> None:
         client = TestClient(app)

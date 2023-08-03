@@ -12,4 +12,5 @@ class CountryResponse:
 
 @dataclass
 class CountriesResponse:
-    countries: List[CountryResponse]
+    country: CountryResponse
+    capitals: List[str]

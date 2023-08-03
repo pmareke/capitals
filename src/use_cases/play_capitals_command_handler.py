@@ -1,5 +1,6 @@
 from typing import List
 import uuid
+import random
 
 from src.domain.command import Command
 from src.domain.command_handler import CommandHandler
@@ -16,8 +17,9 @@ class PlayCapitalsCommand(Command):
 
 class PlayCapitalsCommandResponse(CommandResponse):
 
-    def __init__(self, countries: List[Country]) -> None:
-        self.countries = countries
+    def __init__(self, country: Country, capitals: List[str]) -> None:
+        self.country = country
+        self.capitals = capitals
 
 
 class PlayCapitalsCommandHandler(CommandHandler):
@@ -25,7 +27,8 @@ class PlayCapitalsCommandHandler(CommandHandler):
     def __init__(self, repository: CountriesRepository):
         self.repository = repository
 
-    def process(self,
-                _command: PlayCapitalsCommand) -> PlayCapitalsCommandResponse:
+    def process(self, _command: PlayCapitalsCommand) -> PlayCapitalsCommandResponse:
         countries = self.repository.find_countries()
-        return PlayCapitalsCommandResponse(countries)
+        country: Country = random.sample(countries, 1)[0]
+        capitals = [country.capital for country in countries]
+        return PlayCapitalsCommandResponse(country, capitals)
