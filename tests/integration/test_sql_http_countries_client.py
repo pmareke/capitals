@@ -3,6 +3,7 @@ from src.infrastructure.http_countries_client import HttpCountriesClient
 
 
 class TestHttpCountriesClientIntegration:
+
     def test_find_all_countries(self) -> None:
         countries_client = HttpCountriesClient()
 
