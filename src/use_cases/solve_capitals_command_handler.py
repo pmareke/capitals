@@ -17,8 +17,9 @@ class SolveCapitalsCommand(Command):
 
 class SolveCapitalsCommandResponse(CommandResponse):
 
-    def __init__(self, is_solved: bool) -> None:
+    def __init__(self, is_solved: bool, capital: str | None) -> None:
         self.is_solved = is_solved
+        self.capital = capital
 
 
 class SolveCapitalsCommandHandler(CommandHandler):
@@ -26,7 +27,9 @@ class SolveCapitalsCommandHandler(CommandHandler):
     def __init__(self, repository: CountriesRepository):
         self.repository = repository
 
-    def process(self, command: SolveCapitalsCommand) -> SolveCapitalsCommandResponse:
+    def process(self,
+                command: SolveCapitalsCommand) -> SolveCapitalsCommandResponse:
         country = self.repository.find_country(command.country)
         is_solved = country.capital == command.capital
-        return SolveCapitalsCommandResponse(is_solved)
+        capital = None if is_solved else country.capital
+        return SolveCapitalsCommandResponse(is_solved, capital)

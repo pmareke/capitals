@@ -16,11 +16,16 @@ async def _solve_capitals_command_handler() -> CommandHandler:
     return SolveCapitalsCommandHandler(countries_repository)
 
 
-@solve_capitals_router.post("/api/v1/solve", response_model=SolveCapitalsResponse)
-def solve_capitals(solve_capitals_request: SolveCapitalsRequest, handler: SolveCapitalsCommandHandler = Depends(
-    _solve_capitals_command_handler)) -> SolveCapitalsResponse:
+@solve_capitals_router.post("/api/v1/solve",
+                            response_model=SolveCapitalsResponse,
+                            response_model_exclude_none=True)
+def solve_capitals(
+    solve_capitals_request: SolveCapitalsRequest,
+    handler: SolveCapitalsCommandHandler = Depends(
+        _solve_capitals_command_handler)
+) -> SolveCapitalsResponse:
     country = solve_capitals_request.country
     capital = solve_capitals_request.capital
     command = SolveCapitalsCommand(country, capital)
     response = handler.process(command)
-    return SolveCapitalsResponse(response.is_solved)
+    return SolveCapitalsResponse(response.is_solved, response.capital)
