@@ -14,3 +14,21 @@ class TestCapitalsControllerAcceptance:
         expect(response.status_code).to(equal(HTTPStatus.OK))
         expect(response.json()).to(have_key("countries"))
         expect(response.json()["countries"]).to(have_len(3))
+
+    def test_wins_capitals_game(self) -> None:
+        client = TestClient(app)
+        payload = {"country": "Spain", "capital": "Madrid"}
+        
+        response = client.post("/api/v1/solve", json=payload)
+
+        expect(response.status_code).to(equal(HTTPStatus.OK))
+        expect(response.json()).to(equal({"ok": True}))
+
+    def test_loses_capitals_game(self) -> None:
+        client = TestClient(app)
+        payload = {"country": "Spain", "capital": "Barcelona"}
+        
+        response = client.post("/api/v1/solve", json=payload)
+
+        expect(response.status_code).to(equal(HTTPStatus.OK))
+        expect(response.json()).to(equal({"ok": False}))

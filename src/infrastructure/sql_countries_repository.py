@@ -22,6 +22,11 @@ class SqlCountriesRepository(CountriesRepository):
         ]
         return random.sample(countries, total)
 
+    def find_country(self, country: str) -> Country:
+        if not self.countries_cache:
+            self.countries_cache = self._find_countries()
+        return self.countries_cache[country]
+
     def _find_countries(self) -> Dict[str, Country]:
         con = sqlite3.connect("countries.db")
         cursor = con.cursor()
