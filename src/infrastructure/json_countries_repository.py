@@ -21,6 +21,12 @@ class JsonCountriesRepository(CountriesRepository):
     def find_country(self, country: str) -> Country | None:
         return self.countries.get(country)
 
+    def find_country_by_flag(self, flag: str) -> Country | None:
+        for country in self.countries.values():
+            if country.flag.image == flag:
+                return country
+        return None
+
     @staticmethod
     def _generate_countries() -> Dict[str, Country]:
         countries: Dict[str, Country] = {}

@@ -28,3 +28,19 @@ class TestJsonCountriesRepositoryIntegration:
         country = countries_repository.find_country("non-existing")
 
         expect(country).to(be_none)
+
+    def test_find_country_by_flag(self) -> None:
+        countries_repository = JsonCountriesRepository()
+
+        country = countries_repository.find_country_by_flag("https://flagcdn.com/es.svg")
+
+        assert country
+        expect(country.name).to(equal("Spain"))
+
+    def test_find_non_existing_country_by_flag(self) -> None:
+        countries_repository = JsonCountriesRepository()
+
+        country = countries_repository.find_country_by_flag("non-existing")
+
+        expect(country).to(be_none)
+

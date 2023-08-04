@@ -13,3 +13,7 @@ class CountriesRepository(ABC):
     @abstractmethod
     def find_country(self, country: str) -> Country | None:
         raise NotImplementedError
+
+    @abstractmethod
+    def find_country_by_flag(self, country: str) -> Country:
+        raise NotImplementedError

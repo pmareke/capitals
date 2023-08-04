@@ -5,8 +5,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from src.domain.exceptions import NotFoundCountryException
 from src.infrastructure.json_countries_repository import JsonCountriesRepository
 
-from src.delivery.api.v1.solve_capitals_request import SolveCapitalsRequest
-from src.delivery.api.v1.solve_capitals_response import SolveCapitalsResponse
+from src.delivery.api.v1.capitals.solve_capitals_request import SolveCapitalsRequest
+from src.delivery.api.v1.capitals.solve_capitals_response import SolveCapitalsResponse
 
 from src.domain.command_handler import CommandHandler
 from src.use_cases.solve_capitals_command_handler import SolveCapitalsCommand, SolveCapitalsCommandHandler
