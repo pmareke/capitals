@@ -13,11 +13,12 @@ async def _play_capitals_command_handler() -> CommandHandler:
     return PlayCapitalsCommandHandler(countries_repository)
 
 
-@play_capitals_router.get("/api/v1/play", response_model=CountriesResponse)
+@play_capitals_router.get("/api/v1/capitals/play", response_model=CountriesResponse)
 def play_capitals(handler: PlayCapitalsCommandHandler = Depends(
     _play_capitals_command_handler)) -> CountriesResponse:
     command = PlayCapitalsCommand()
     response = handler.process(command)
-    country_response = CountryResponse(response.country.name, response.country.flag)
+    country_response = CountryResponse(response.country.name,
+                                       response.country.flag)
     capitals = response.capitals
     return CountriesResponse(country_response, capitals)

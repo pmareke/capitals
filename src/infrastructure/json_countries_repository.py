@@ -23,7 +23,7 @@ class JsonCountriesRepository(CountriesRepository):
 
     @staticmethod
     def _generate_countries() -> Dict[str, Country]:
-        countries:  Dict[str, Country] = {}
+        countries: Dict[str, Country] = {}
         with open("countries.json") as file:
             items = json.load(file)
             for item in items:
@@ -31,10 +31,6 @@ class JsonCountriesRepository(CountriesRepository):
                 if capitals:
                     name = item["name"]["common"]
                     flag = Flag(item["flags"]["svg"])
-                    country = Country(
-                        name=name,
-                        capital=capitals[0],
-                        flag=flag
-                    )
+                    country = Country(name=name, capital=capitals[0], flag=flag)
                     countries[name] = country
         return countries

@@ -9,7 +9,7 @@ class TestCapitalsControllerAcceptance:
     def test_find_play_capitals_game(self) -> None:
         client = TestClient(app)
 
-        response = client.get("/api/v1/play")
+        response = client.get("/api/v1/capitals/play")
 
         expect(response.status_code).to(equal(HTTPStatus.OK))
         expect(response.json()).to(have_key("country"))
@@ -19,7 +19,7 @@ class TestCapitalsControllerAcceptance:
         client = TestClient(app)
         payload = {"country": "Spain", "capital": "Madrid"}
 
-        response = client.post("/api/v1/solve", json=payload)
+        response = client.post("/api/v1/capitals/solve", json=payload)
 
         expect(response.status_code).to(equal(HTTPStatus.OK))
         expect(response.json()).to(equal({"ok": True}))
@@ -28,7 +28,7 @@ class TestCapitalsControllerAcceptance:
         client = TestClient(app)
         payload = {"country": "Spain", "capital": "Barcelona"}
 
-        response = client.post("/api/v1/solve", json=payload)
+        response = client.post("/api/v1/capitals/solve", json=payload)
 
         expect(response.status_code).to(equal(HTTPStatus.OK))
         expect(response.json()).to(equal({"ok": False, "capital": "Madrid"}))
@@ -37,6 +37,6 @@ class TestCapitalsControllerAcceptance:
         client = TestClient(app)
         payload = {"country": "non-existing-country", "capital": "Barcelona"}
 
-        response = client.post("/api/v1/solve", json=payload)
+        response = client.post("/api/v1/capitals/solve", json=payload)
 
         expect(response.status_code).to(equal(HTTPStatus.BAD_REQUEST))

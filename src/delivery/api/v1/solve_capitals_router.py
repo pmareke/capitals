@@ -19,7 +19,7 @@ async def _solve_capitals_command_handler() -> CommandHandler:
     return SolveCapitalsCommandHandler(countries_repository)
 
 
-@solve_capitals_router.post("/api/v1/solve",
+@solve_capitals_router.post("/api/v1/capitals/solve",
                             response_model=SolveCapitalsResponse,
                             response_model_exclude_none=True)
 def solve_capitals(
@@ -35,4 +35,5 @@ def solve_capitals(
         response = handler.process(command)
         return SolveCapitalsResponse(response.is_solved, response.capital)
     except NotFoundCountryException as exception:
-        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=f"The country is not valid" ) from exception
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST,
+                            detail=f"The country is not valid") from exception
