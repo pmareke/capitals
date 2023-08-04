@@ -11,5 +11,5 @@ class CountriesRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def find_country(self, country: str) -> Country:
+    def find_country(self, country: str) -> Country | None:
         raise NotImplementedError

@@ -32,3 +32,11 @@ class TestCapitalsControllerAcceptance:
 
         expect(response.status_code).to(equal(HTTPStatus.OK))
         expect(response.json()).to(equal({"ok": False, "capital": "Madrid"}))
+
+    def test_send_invalid_payload(self) -> None:
+        client = TestClient(app)
+        payload = {"country": "non-existing-country", "capital": "Barcelona"}
+
+        response = client.post("/api/v1/solve", json=payload)
+
+        expect(response.status_code).to(equal(HTTPStatus.BAD_REQUEST))

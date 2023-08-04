@@ -19,4 +19,12 @@ class TestJsonCountriesRepositoryIntegration:
 
         country = countries_repository.find_country("Spain")
 
+        assert country
         expect(country.capital).to(equal("Madrid"))
+
+    def test_find_non_existing_country(self) -> None:
+        countries_repository = JsonCountriesRepository()
+
+        country = countries_repository.find_country("non-existing")
+
+        expect(country).to(be_none)

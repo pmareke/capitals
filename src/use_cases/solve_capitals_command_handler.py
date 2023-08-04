@@ -5,6 +5,7 @@ from src.domain.command import Command
 from src.domain.command_handler import CommandHandler
 from src.domain.command_response import CommandResponse
 from src.domain.countries_repository import CountriesRepository
+from src.domain.exceptions import NotFoundCountryException
 
 
 class SolveCapitalsCommand(Command):
@@ -30,6 +31,8 @@ class SolveCapitalsCommandHandler(CommandHandler):
     def process(self,
                 command: SolveCapitalsCommand) -> SolveCapitalsCommandResponse:
         country = self.repository.find_country(command.country)
+        if not country:
+            raise NotFoundCountryException()
         is_solved = country.capital == command.capital
         capital = None if is_solved else country.capital
         return SolveCapitalsCommandResponse(is_solved, capital)

@@ -1,4 +1,8 @@
-from fastapi import APIRouter, Depends
+from http import HTTPStatus
+
+from fastapi import APIRouter, Depends, HTTPException
+
+from src.domain.exceptions import NotFoundCountryException
 from src.infrastructure.json_countries_repository import JsonCountriesRepository
 
 from src.delivery.api.v1.solve_capitals_request import SolveCapitalsRequest
@@ -26,5 +30,9 @@ def solve_capitals(
     country = solve_capitals_request.country
     capital = solve_capitals_request.capital
     command = SolveCapitalsCommand(country, capital)
-    response = handler.process(command)
-    return SolveCapitalsResponse(response.is_solved, response.capital)
+
+    try:
+        response = handler.process(command)
+        return SolveCapitalsResponse(response.is_solved, response.capital)
+    except NotFoundCountryException as exception:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=f"The country is not valid" ) from exception

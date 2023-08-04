@@ -15,11 +15,11 @@ class JsonCountriesRepository(CountriesRepository):
         self.countries: Dict[str, Country] = self._generate_countries()
 
     def find_countries(self, total: int = 3) -> List[Country]:
-        countries = [c for c in self.countries.values()]
+        countries = [country for country in self.countries.values()]
         return random.sample(countries, total)
 
-    def find_country(self, country: str) -> Country:
-        return self.countries[country]
+    def find_country(self, country: str) -> Country | None:
+        return self.countries.get(country)
 
     @staticmethod
     def _generate_countries() -> Dict[str, Country]:
