@@ -1,18 +1,17 @@
 from fastapi import APIRouter, Depends
+from src.infrastructure.json_countries_repository import JsonCountriesRepository
+
 from src.delivery.api.v1.solve_capitals_request import SolveCapitalsRequest
 from src.delivery.api.v1.solve_capitals_response import SolveCapitalsResponse
 
 from src.domain.command_handler import CommandHandler
-from src.infrastructure.http_countries_client import HttpCountriesClient
-from src.infrastructure.sql_countries_repository import SqlCountriesRepository
 from src.use_cases.solve_capitals_command_handler import SolveCapitalsCommand, SolveCapitalsCommandHandler
 
 solve_capitals_router = APIRouter()
 
 
 async def _solve_capitals_command_handler() -> CommandHandler:
-    countries_client = HttpCountriesClient()
-    countries_repository = SqlCountriesRepository(countries_client)
+    countries_repository = JsonCountriesRepository()
     return SolveCapitalsCommandHandler(countries_repository)
 
 

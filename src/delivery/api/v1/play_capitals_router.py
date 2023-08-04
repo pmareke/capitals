@@ -1,17 +1,15 @@
 from fastapi import APIRouter, Depends
+from src.infrastructure.json_countries_repository import JsonCountriesRepository
 
 from src.domain.command_handler import CommandHandler
 from src.domain.countries_response import CountriesResponse, CountryResponse
-from src.infrastructure.http_countries_client import HttpCountriesClient
-from src.infrastructure.sql_countries_repository import SqlCountriesRepository
 from src.use_cases.play_capitals_command_handler import PlayCapitalsCommand, PlayCapitalsCommandHandler, PlayCapitalsCommandResponse
 
 play_capitals_router = APIRouter()
 
 
 async def _play_capitals_command_handler() -> CommandHandler:
-    countries_client = HttpCountriesClient()
-    countries_repository = SqlCountriesRepository(countries_client)
+    countries_repository = JsonCountriesRepository()
     return PlayCapitalsCommandHandler(countries_repository)
 
 

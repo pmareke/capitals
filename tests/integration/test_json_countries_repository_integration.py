@@ -1,14 +1,11 @@
 from expects import be_none, equal, expect, have_len
-
-from src.infrastructure.http_countries_client import HttpCountriesClient
-from src.infrastructure.sql_countries_repository import SqlCountriesRepository
+from src.infrastructure.json_countries_repository import JsonCountriesRepository
 
 
-class TestSqlCountriesRepositoryIntegration:
+class TestJsonCountriesRepositoryIntegration:
 
     def test_find_countries(self) -> None:
-        countries_client = HttpCountriesClient()
-        countries_repository = SqlCountriesRepository(countries_client)
+        countries_repository = JsonCountriesRepository()
 
         countries = countries_repository.find_countries(total=3)
 
@@ -18,8 +15,7 @@ class TestSqlCountriesRepositoryIntegration:
         expect(countries[0].flag).not_to(be_none)
 
     def test_find_country(self) -> None:
-        countries_client = HttpCountriesClient()
-        countries_repository = SqlCountriesRepository(countries_client)
+        countries_repository = JsonCountriesRepository()
 
         country = countries_repository.find_country("Spain")
 
