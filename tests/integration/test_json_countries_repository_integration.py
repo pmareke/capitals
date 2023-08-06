@@ -1,4 +1,5 @@
 from expects import be_none, equal, expect
+from src.domain.region import Region
 from src.infrastructure.json_countries_repository import JsonCountriesRepository
 
 
@@ -14,7 +15,7 @@ class TestJsonCountriesRepositoryIntegration:
         expect(countries[0].flag).not_to(be_none)
 
     def test_find_countries_by_region(self) -> None:
-        region = "europe"
+        region = Region.EUROPE
         countries_repository = JsonCountriesRepository()
 
         countries = countries_repository.find_countries(region)

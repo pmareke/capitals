@@ -7,11 +7,12 @@ from src.domain.command_handler import CommandHandler
 from src.domain.command_response import CommandResponse
 from src.domain.countries_repository import CountriesRepository
 from src.domain.country import Country
+from src.domain.region import Region
 
 
 class PlayCapitalsCommand(Command):
 
-    def __init__(self, region: str | None) -> None:
+    def __init__(self, region: Region | None) -> None:
         self.region = region
         super().__init__(uuid.uuid1())
 

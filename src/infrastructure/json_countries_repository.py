@@ -8,6 +8,7 @@ from src.domain.flag import Flag
 
 from src.domain.countries_repository import CountriesRepository
 from src.domain.country import Country
+from src.domain.region import Region
 
 
 class JsonCountriesRepository(CountriesRepository):
@@ -17,9 +18,9 @@ class JsonCountriesRepository(CountriesRepository):
         self.countries: Dict[str, Country] = self._generate_countries()
         self.countries_by_region: Dict[str, List[Country]] = self._generate_countries_by_region()
 
-    def find_countries(self, region: str | None = None) -> List[Country]:
+    def find_countries(self, region: Region | None = None) -> List[Country]:
         if region:
-            countries = self.countries_by_region[region]
+            countries = self.countries_by_region[region.value]
         else:
             countries = [country for country in self.countries.values()]
         return random.sample(countries, self.TOTAL_NUMBER_OF_COUNTRIES)
