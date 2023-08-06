@@ -6,10 +6,19 @@ from fastapi.testclient import TestClient
 
 class TestCountriesControllerAcceptance:
 
-    def test_find_play_countries_game(self) -> None:
+    def test_plays_countries_game(self) -> None:
         client = TestClient(app)
 
         response = client.get("/api/v1/countries/play")
+
+        expect(response.status_code).to(equal(HTTPStatus.OK))
+        expect(response.json()).to(have_key("flag"))
+        expect(response.json()["countries"]).to(have_len(3))
+
+    def test_plays_countries_game_in_europe(self) -> None:
+        client = TestClient(app)
+
+        response = client.get("/api/v1/countries/play?region=europe")
 
         expect(response.status_code).to(equal(HTTPStatus.OK))
         expect(response.json()).to(have_key("flag"))

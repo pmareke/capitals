@@ -14,9 +14,9 @@ async def _play_capitals_command_handler() -> CommandHandler:
 
 
 @play_capitals_router.get("/api/v1/capitals/play", response_model=CapitalsResponse)
-def play_capitals(handler: PlayCapitalsCommandHandler = Depends(
+def play_capitals(region: str | None = None, handler: PlayCapitalsCommandHandler = Depends(
     _play_capitals_command_handler)) -> CapitalsResponse:
-    command = PlayCapitalsCommand()
+    command = PlayCapitalsCommand(region)
     response = handler.process(command)
     country_response = CountryResponse(response.country.name,
                                        response.country.flag)

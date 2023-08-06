@@ -11,7 +11,8 @@ from src.domain.country import Country
 
 class PlayCapitalsCommand(Command):
 
-    def __init__(self) -> None:
+    def __init__(self, region: str | None) -> None:
+        self.region = region
         super().__init__(uuid.uuid1())
 
 
@@ -27,8 +28,8 @@ class PlayCapitalsCommandHandler(CommandHandler):
     def __init__(self, repository: CountriesRepository):
         self.repository = repository
 
-    def process(self, _command: PlayCapitalsCommand) -> PlayCapitalsCommandResponse:
-        countries = self.repository.find_countries()
+    def process(self, command: PlayCapitalsCommand) -> PlayCapitalsCommandResponse:
+        countries = self.repository.find_countries(region=command.region)
         country: Country = random.sample(countries, 1)[0]
         capitals = [country.capital for country in countries]
         return PlayCapitalsCommandResponse(country, capitals)

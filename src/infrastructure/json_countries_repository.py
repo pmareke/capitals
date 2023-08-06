@@ -1,6 +1,7 @@
 import json
 import random
 
+from collections import defaultdict
 from typing import Dict, List
 
 from src.domain.flag import Flag
@@ -10,13 +11,18 @@ from src.domain.country import Country
 
 
 class JsonCountriesRepository(CountriesRepository):
+    TOTAL_NUMBER_OF_COUNTRIES = 3
 
     def __init__(self) -> None:
         self.countries: Dict[str, Country] = self._generate_countries()
+        self.countries_by_region: Dict[str, List[Country]] = self._generate_countries_by_region()
 
-    def find_countries(self, total: int = 3) -> List[Country]:
-        countries = [country for country in self.countries.values()]
-        return random.sample(countries, total)
+    def find_countries(self, region: str | None = None) -> List[Country]:
+        if region:
+            countries = self.countries_by_region[region]
+        else:
+            countries = [country for country in self.countries.values()]
+        return random.sample(countries, self.TOTAL_NUMBER_OF_COUNTRIES)
 
     def find_country(self, country: str) -> Country | None:
         return self.countries.get(country)
@@ -36,7 +42,15 @@ class JsonCountriesRepository(CountriesRepository):
                 capitals = item["capital"]
                 if capitals:
                     name = item["name"]["common"]
+                    capital = capitals[0]
                     flag = Flag(item["flags"]["svg"])
-                    country = Country(name=name, capital=capitals[0], flag=flag)
+                    region = item["region"].lower()
+                    country = Country(name, capital, flag, region)
                     countries[name] = country
         return countries
+
+    def _generate_countries_by_region(self,) -> Dict[str, List[Country]]:
+        countries_by_region: Dict[str, List[Country]] = defaultdict(list)
+        for country in self.countries.values():
+            countries_by_region[country.region].append(country)
+        return countries_by_region

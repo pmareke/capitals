@@ -8,3 +8,4 @@ class Country:
     name: str
     capital: str
     flag: Flag
+    region: str

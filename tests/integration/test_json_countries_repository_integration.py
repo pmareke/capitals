@@ -1,4 +1,4 @@
-from expects import be_none, equal, expect, have_len
+from expects import be_none, equal, expect
 from src.infrastructure.json_countries_repository import JsonCountriesRepository
 
 
@@ -7,12 +7,19 @@ class TestJsonCountriesRepositoryIntegration:
     def test_find_countries(self) -> None:
         countries_repository = JsonCountriesRepository()
 
-        countries = countries_repository.find_countries(total=3)
+        countries = countries_repository.find_countries()
 
-        expect(countries).to(have_len(3))
         expect(countries[0].name).not_to(be_none)
         expect(countries[0].capital).not_to(be_none)
         expect(countries[0].flag).not_to(be_none)
+
+    def test_find_countries_by_region(self) -> None:
+        region = "europe"
+        countries_repository = JsonCountriesRepository()
+
+        countries = countries_repository.find_countries(region)
+
+        expect(countries[0].region).to(equal(region))
 
     def test_find_country(self) -> None:
         countries_repository = JsonCountriesRepository()
