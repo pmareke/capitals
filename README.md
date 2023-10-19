@@ -2,7 +2,7 @@
 
 ## Endpoints
 
-![](/imasges/swagger.png)
+![Swagger docs](/images/swagger.png)
 
 ## Requirements
 - You only need to have [Docker](https://www.docker.com/) installed.
