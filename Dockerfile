@@ -1,16 +1,16 @@
 FROM python:3.10-alpine
 
-RUN apk  update --no-cache && apk upgrade --no-cache --available
+RUN apk update --no-cache && apk upgrade --no-cache --available
 
 WORKDIR /code
 
-COPY pyproject.toml /code
-
 RUN pip install poetry
+
+COPY pyproject.toml /code
 
 RUN poetry install --without test
 
-COPY . /code
+COPY src /code/src
 
 EXPOSE 8000
 
