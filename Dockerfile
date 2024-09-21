@@ -10,7 +10,9 @@ COPY pyproject.toml /code
 
 RUN poetry install --without test
 
-COPY src /code/src
+COPY . /code
+
+RUN rm -r tests scripts images
 
 EXPOSE 8000
 
