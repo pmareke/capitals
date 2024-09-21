@@ -16,11 +16,11 @@ class JsonCountriesRepository(CountriesRepository):
 
     def __init__(self) -> None:
         self.countries: Dict[str, Country] = self._generate_countries()
-        self.countries_by_region: Dict[str, List[Country]] = self._generate_countries_by_region()
+        self.countries_by_region = self._generate_countries_by_region()
 
     def find_countries(self, region: Region | None = None) -> List[Country]:
         if region:
-            countries = self.countries_by_region[region.value]
+            countries = self.countries_by_region[region]
         else:
             countries = [country for country in self.countries.values()]
         return random.sample(countries, self.TOTAL_NUMBER_OF_COUNTRIES)
@@ -50,8 +50,8 @@ class JsonCountriesRepository(CountriesRepository):
                     countries[name] = country
         return countries
 
-    def _generate_countries_by_region(self,) -> Dict[str, List[Country]]:
-        countries_by_region: Dict[str, List[Country]] = defaultdict(list)
+    def _generate_countries_by_region(self) -> Dict[Region, List[Country]]:
+        countries_by_region: Dict[Region, List[Country]] = defaultdict(list)
         for country in self.countries.values():
-            countries_by_region[country.region].append(country)
+            countries_by_region[Region(country.region)].append(country)
         return countries_by_region

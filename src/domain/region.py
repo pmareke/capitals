@@ -3,7 +3,8 @@ from enum import Enum
 
 class Region(str, Enum):
     ASIA = "asia"
-    AFRICA = "africa" 
+    AFRICA = "africa"
     EUROPE = "europe"
-    AMERICAS = "americas",
+    AMERICAS = "americas"
     OCEANIA = "oceania"
+    ANTARTIC = "antarctic"

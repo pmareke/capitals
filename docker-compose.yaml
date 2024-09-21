@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   capitals:
     image: capitals
@@ -8,4 +7,4 @@ services:
     environment:
       PYTHONPATH: .
     ports:
-      - "8080:8080"
+      - "8000:8000"

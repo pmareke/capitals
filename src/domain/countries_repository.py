@@ -6,7 +6,6 @@ from src.domain.region import Region
 
 
 class CountriesRepository(ABC):
-
     @abstractmethod
     def find_countries(self, region: Region | None = None) -> List[Country]:
         raise NotImplementedError
@@ -16,5 +15,5 @@ class CountriesRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def find_country_by_flag(self, country: str) -> Country:
+    def find_country_by_flag(self, flag: str) -> Country | None:
         raise NotImplementedError
