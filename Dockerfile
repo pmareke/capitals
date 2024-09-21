@@ -6,9 +6,9 @@ WORKDIR /code
 
 COPY pyproject.toml /code
 
-RUN pip install poetry --without test
+RUN pip install poetry
 
-RUN poetry install
+RUN poetry install --without test
 
 COPY . /code
 
