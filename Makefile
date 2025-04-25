@@ -15,7 +15,7 @@ add-package: ## Add package to the project ex: make add-package package=XX
 
 .PHONY: install
 install:    ## Run the app
-	poetry run poetry install
+	poetry run poetry install --no-root
 
 .PHONY: up
 up:    ## Run the app
