@@ -8,7 +8,7 @@ RUN pip install poetry
 
 COPY pyproject.toml /code
 
-RUN poetry install --without test
+RUN poetry install --without test --no-root
 
 COPY . /code
 
